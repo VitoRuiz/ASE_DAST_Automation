@@ -5,7 +5,12 @@ const path = require('path');
 
 module.exports = {
 
-    get: function (url, headers, callback) {
+    get: function (cookie, sessionId, url, callback) {
+
+        const headers = {
+            Cookie: cookie,
+            asc_xsrf_token: sessionId
+        };
 
         request({
             headers: headers,
