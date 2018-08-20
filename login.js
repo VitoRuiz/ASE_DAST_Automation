@@ -16,7 +16,8 @@ const login = module.exports = function(callback) {
         if (!body || !body.sessionId || !response.headers['set-cookie']) {
             callback({
                 success: false,
-                error: (error ? error : body.errorMessage)
+                error: (error ? error : body.errorMessage),
+                status: response.statusCode + ' ' + response.statusMessage
             });
         } else callback({
             success: true,
@@ -32,5 +33,5 @@ login(function(result) {
     if (result.success)
         console.info('Login SUCCESS: Obtained sessionId ' + result.sessionId + ' and cookies.');
     else
-        console.error('Login FAILURE: ' + result.error);
+        console.error('Login FAILURE: (' + result.status + ') ' + (result.error ? result.error : ''));
 });

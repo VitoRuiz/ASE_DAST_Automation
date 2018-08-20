@@ -9,7 +9,8 @@ const queryJob = module.exports = function(sessionId, cookie, jobId, callback) {
         if (!body || !body.id) {
             callback({
                 success: false,
-                error: (error ? error : body)
+                error: (error ? error : body),
+                status: response.statusCode + ' ' + response.statusMessage
             })
         } else callback({
             success: true,
@@ -33,10 +34,9 @@ login(function(loginResult) {
 
     queryJob(loginResult.sessionId, loginResult.cookie, jobId, function(result) {
         if (result.success)
-            console.info('Job query SUCCESS: Obtained etag ' + result.etag);
+            console.info('Job query SUCCESS: Obtained etag (including quotes) ' + result.etag);
         else
-            //TODO: Improve error handling - this just returns undefined
-            console.error('Job query FAILURE: ' + result.error);
+            console.error('Job query FAILURE: (' + result.status + ') ' + (result.error ? result.error : ''));
     });
 
 });

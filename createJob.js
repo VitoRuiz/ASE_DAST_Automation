@@ -19,10 +19,12 @@ const createJob = module.exports = function(sessionId, cookie, templateId, testP
     };
 
     http.postMultipart(cookie, sessionId, url, body, fileLoc, function(error, response, body) {
-        if (!body || !(JSON.parse(body)).id) {
+        let bodyObj;
+        if (!body || !(bodyObj = JSON.parse(body)).id) {
             callback({
                 success: false,
-                error: (error ? error : body)
+                error: (error ? error : bodyObj.errorMessage),
+                status: response.statusCode + ' ' + response.statusMessage
             });
         } else callback({
             success: true,
@@ -44,7 +46,7 @@ login(function(loginResult) {
     const testPolicyId = 20;
     const folderId = 5;
     const applicationId = 1018;
-    const name = 'Vito Test 29';
+    const name = 'Vito Test 30';
     const description = 'Test Description';
     const contact = 'Test Contact';
     const dastConfigFileLoc = '/Users/vruiz/Desktop/8088.dast.config';
@@ -53,7 +55,7 @@ login(function(loginResult) {
         if (result.success)
             console.info('Job creation SUCCESS: ' + result.newJobData);
         else
-            console.error('Job creation FAILURE: ' + result.error);
+            console.error('Job creation FAILURE: (' + result.status + ') ' + (result.error ? result.error : ''));
     });
 
 });
