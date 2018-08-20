@@ -23,7 +23,7 @@ const createJob = module.exports = function(sessionId, cookie, templateId, testP
             callback({
                 success: false,
                 error: (error ? error : bodyObj.errorMessage),
-                status: response.statusCode + ' ' + response.statusMessage
+                status: response ? (response.statusCode + ' ' + response.statusMessage) : 'No HTTP status code'
             });
         } else callback({
             success: true,
