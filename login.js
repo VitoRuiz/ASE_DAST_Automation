@@ -27,11 +27,3 @@ const login = module.exports = function(callback) {
     });
 
 };
-
-//TEST - invoke this file directly with node to test
-login(function(result) {
-    if (result.success)
-        console.info('Login SUCCESS: Obtained sessionId ' + result.sessionId + ' and cookies.');
-    else
-        console.error('Login FAILURE: (' + result.status + ') ' + (result.error ? result.error : ''));
-});

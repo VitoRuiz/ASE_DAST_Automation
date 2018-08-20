@@ -1,6 +1,5 @@
 const config = require('./config');
 const http = require('./http');
-const login = require('./login');
 
 const queryJob = module.exports = function(sessionId, cookie, jobId, callback) {
 
@@ -21,22 +20,3 @@ const queryJob = module.exports = function(sessionId, cookie, jobId, callback) {
     });
 
 };
-
-//TEST - invoke this file directly with node to test
-login(function(loginResult) {
-
-    if (!loginResult.success) {
-        console.error('Login failed during job creation: ' + loginResult.error);
-        return;
-    }
-
-    const jobId = 1652;
-
-    queryJob(loginResult.sessionId, loginResult.cookie, jobId, function(result) {
-        if (result.success)
-            console.info('Job query SUCCESS: Obtained etag (including quotes) ' + result.etag);
-        else
-            console.error('Job query FAILURE: (' + result.status + ') ' + (result.error ? result.error : ''));
-    });
-
-});
