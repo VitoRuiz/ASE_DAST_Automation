@@ -8,7 +8,8 @@ login(function(loginResult) {
         return;
     }
 
-    const jobId = 1652;
+    //FILL IN TEST PARAMS
+    const jobId = undefined;
 
     queryJob(loginResult.sessionId, loginResult.cookie, jobId, function(result) {
         if (result.success)

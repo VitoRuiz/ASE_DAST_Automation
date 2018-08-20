@@ -8,8 +8,9 @@ login(function(loginResult) {
         return;
     }
 
-    const jobId = 1652;
-    const etag = '"6cd07572d0db218be49850523b771fe2"';
+    //FILL IN TEST PARAMS
+    const jobId = undefined;
+    const etag = undefined;
 
     runJob(loginResult.sessionId, loginResult.cookie, jobId, etag, function(result) {
         if (result.success) {

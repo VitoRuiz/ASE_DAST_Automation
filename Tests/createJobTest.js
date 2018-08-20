@@ -8,14 +8,15 @@ login(function(loginResult) {
         return;
     }
 
-    const templateId = 1622;
-    const testPolicyId = 20;
-    const folderId = 5;
-    const applicationId = 1018;
-    const name = 'Vito Test 30';
-    const description = 'Test Description';
-    const contact = 'Test Contact';
-    const dastConfigFileLoc = '/Users/vruiz/Desktop/8088.dast.config';
+    //FILL IN TEST PARAMS
+    const templateId = undefined;
+    const testPolicyId = undefined;
+    const folderId = undefined;
+    const applicationId = undefined;
+    const name = undefined;
+    const description = undefined;
+    const contact = undefined;
+    const dastConfigFileLoc = undefined;
 
     createJob(loginResult.sessionId, loginResult.cookie, templateId, testPolicyId, folderId, applicationId, name, description, contact, dastConfigFileLoc, function (result) {
         if (result.success)
