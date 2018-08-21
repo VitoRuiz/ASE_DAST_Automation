@@ -39,44 +39,40 @@ module.exports = {
 
     postMultipart: function (cookie, sessionId, url, body, fileLoc, callback) {
 
-        fs.readFile(fileLoc, 'utf8', function (err, data) { //file data is stored in data param
+        //Construct the form, first with all of the body parameters, then with the file
 
-            if (err) {
-                callback(err, null, null);
-                return;
-            }
+        const fd = new FormData();
 
-            //Construct the form, first with all of the body parameters, then with the file
+        const headers = {
+            Cookie: cookie,
+            asc_xsrf_token: sessionId,
+            'Content-Type': 'multipart/form-data; boundary=' + fd.getBoundary(),
+            Accept: "application/json, text/javascript, */*;q=0.01",
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'en-US,en'
+        };
 
-            const fd = new FormData();
+        Object.keys(body).forEach(function (key) {
+            const val = body[key];
+            fd.append(key, (typeof val === 'object' ? JSON.stringify(val) : val));
+        });
 
-            const headers = {
-                Cookie: cookie,
-                asc_xsrf_token: sessionId,
-                'Content-Type': 'multipart/form-data; boundary=' + fd.getBoundary(),
-                Accept: "application/json, text/javascript, */*;q=0.01",
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'en-US,en'
-            };
+        if (!fs.existsSync(fileLoc)) {
+            callback('File not found: ' + fileLoc, null, null);
+            return;
+        }
+        fd.append('uploadedfile', fs.createReadStream(fileLoc), {contentType: 'application/xml', filename: path.basename(fileLoc)});
 
-            Object.keys(body).forEach(function (key) {
-                const val = body[key];
-                fd.append(key, (typeof val === 'object' ? JSON.stringify(val) : val));
-            });
-
-            fd.append('uploadedfile', data, {contentType: 'application/octet-stream', filename: path.basename(fileLoc)});
-
-            request({
-                headers: headers,
-                url: url,
-                method: "POST",
-                json: false,
-                body: fd,
-                rejectUnauthorized: false
-            }, function (error, response, body) {
-                callback(error, response, body);
-            })
-        })
+        request({
+            headers: headers,
+            url: url,
+            method: "POST",
+            json: false,
+            body: fd,
+            rejectUnauthorized: false
+        }, function (error, response, body) {
+            callback(error, response, body);
+        });
 
     }
 
