@@ -1,0 +1,25 @@
+{
+  "name": "ase_dast_automation",
+  "version": "1.0.0",
+  "description": "Proof of concept for DAST automation with IBM AppScan Enterprise",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitoRuiz/ASE_DAST_Automation.git"
+  },
+  "author": "Vito Ruiz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VitoRuiz/ASE_DAST_Automation/issues"
+  },
+  "homepage": "https://github.com/VitoRuiz/ASE_DAST_Automation#readme",
+  "dependencies": {
+    "form-data": "^2.3.2",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "request": "^2.88.0"
+  }
+}
